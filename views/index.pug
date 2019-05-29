@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>signup</title>
+<link rel="stylesheet"  href="stylesheets/style1.css">
+</head>
+
+<body>
+<h1>SIGNUP</h1>
+<div class="container">
+
+
+ <form action="/signup" method="post" >
+ <span>First Name:</span>
+    <input type="text" placeholder="firstname" name="firstname"><br><br>
+    <span>Last Name:</span>
+    <input type="text" placeholder="lastname" name="lastname"><br><br>
+    <span>User Name:</span>
+    <input type="text" placeholder="username" name="username"><br><br>
+    <span>Roll no:</span>
+    <input type="input" placeholder="Roll number" name="roll"><br><br>
+    <span>Rg no:</span>  
+    <input type="input" placeholder="Registration number" name="register"><br><br>
+    <span>Email:</span>
+    <input type="email" placeholder="mail" name="mail"><br><br>
+    <span>Date of birth:</span>
+    <input type="date" placeholder="bday" name="date"><br><br>
+      <label> <b> AGE: </b></label>
+    <input type="text" placeholder="age" name="age"  onclick="age_Cal()"><br><br>
+    <span>Ph No:</span>
+    <input type="input" placeholder="Phone number" name="number"><br><br>
+      <label> <b>gender:</b></label>
+    <input type="radio" name="gender" value="male"><span> Male</span>
+    <input type="radio" name="gender" value="female"><span>Female</span><br><br>
+    <span>Password:</span>
+    <input type="password" placeholder="password" name="pwd1"><br><br>
+    <span>Confirm Password:</span>
+    <input type="password" placeholder="confirm password" name="pwd2"><br><br><br>
+    <input type="submit" name = "submit" value="Sign UP">
+     
+ </form>
+</div>
+</body>
+</html>
