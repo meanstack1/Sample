@@ -21,8 +21,16 @@
     <input type="input" placeholder="Roll number" name="roll"><br><br>
     <span>Rg no:</span>  
     <input type="input" placeholder="Registration number" name="register"><br><br>
-    <span>Email:</span>
+    <label>Email:</label>
     <input type="email" placeholder="mail" name="mail"><br><br>
+      <label>Branch</label>
+    <select id="branch" name="branch">
+    <option>   </option>
+    <option>CSE</option>
+    <option>IT</option>
+    <option>ECE</option>
+    <option>EER</option>
+    <option>MECH</option><br><br><br>
     <span>Date of birth:</span>
     <input type="date" placeholder="bday" name="date"><br><br>
       <label> <b> AGE: </b></label>
@@ -33,12 +41,37 @@
     <input type="radio" name="gender" value="male"><span> Male</span>
     <input type="radio" name="gender" value="female"><span>Female</span><br><br>
     <span>Password:</span>
-    <input type="password" placeholder="password" name="pwd1"><br><br>
+    <input type="password" placeholder="password" name="password"><br><br>
     <span>Confirm Password:</span>
-    <input type="password" placeholder="confirm password" name="pwd2"><br><br><br>
-    <input type="submit" name = "submit" value="Sign UP">
+    <input type="password" placeholder="confirm password" name="confirm password"><br><br><br>
+    <label><b>Security question: </b></label>
+    <select name="sec_ques" required >
+        <option> </option>
+        <option>Favourite actor</option>
+        <option>Favourite sport</option>
+        <option>Favourite pet</option>
+        <option>Favourite place</option>
+        <option>Favourite food</option>
+    </select><br><br>
+    <input type="text" id="ansid" name="ans" placeholder="answer" style="margin-top:10px;">
+    <input type="submit"  value="Sign UP">
      
  </form>
 </div>
+<div class="container">
+
+<h1>LOGIN</h1>
+ <form action="/login" method="post" >
+ <p>#{err}</p>
+    <span>User Name:</span>
+    <input type="text" placeholder="username" name="username"><br><br>
+    <label>Email:</label>
+    <input type="email" placeholder="mail" name="mail"><br><br>  
+    <span>Password:</span>
+    <input type="password" placeholder="password" name="password"><br><br>
+    <input type="submit" name = "submit" value="login">
+     
+ </form>
+ </div>
 </body>
 </html>
