@@ -7,11 +7,40 @@ var collection=db.get('signup');
 var form=db.get('form');
 var moment=require('moment');
 var nodemailer = require('nodemailer');
+var randomstring=require('randomstring');
+var multer=require('multer');
+var upload = multer({ dest: 'uploads/' });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+ 
+var upload = multer({ storage: storage })
+// var session=require('client-session')
 
 /* GET home page. */
+router.get('/login',function(req,res){
+	if(req.session&&req.session.user)
+	{
+		res.locals.user=req.session.user
+		res.redirect('/home')
+	}
+	else{
+		req.session.reset();
+		res.render('index')
+	}
+});
 router.get('/home', function(req, res)
  {
-  res.render('index');
+ 	if(req.session&&req.session.user)
+	{
+     res.locals.user=req.session.user
+     res.render('index');
+}
 });
 router.get('/form',function(req,res)
 {
@@ -22,13 +51,57 @@ router.get('/form',function(req,res)
 		res.render('form');
 	});
 });
-router.post('/form',function(req,res)
+router.get('/forgot', function(req, res)
+ {
+  res.render('forgotpassword');
+}); 
+//logout
+router.get('/logout', function(req, res)
+ {
+  res.render('/logout');
+}); 
+router.post('/forgotpassword', function(req, res)
+ {
+ 	var email=req.body.name;
+ 	console.log(email);
+ 	var otp=randomstring.generate(5);
+ 	var msg="<html><head></head><body><b>"+otp+"</b></body></html>"
+collection.update({"email":email},{$set:{"password":otp}})
+var transporter = nodemailer.createTransport(
+		 {
+		  service: 'gmail.com',
+		  auth: {
+		    user: 'prasadnaidu977@gmail.com',
+		    pass: 'prasad@3333'
+		  }
+		});
+
+		var mailOptions = {
+		  from: 'prasadnaidu977@gmail.com',
+		  to: req.body.name,
+		  subject: 'thanks for registration',
+		  html:msg
+		};
+
+		transporter.sendMail(mailOptions, function(error, info){
+		  if (error) {
+		    console.log("mail not sent");
+		  } else {
+		    console.log('Email sent: ' + info.response);
+		  }
+		});
+		res.redirect('/home');
+	});
+
+router.post('/form', upload.single('image'),function(req,res)
 	{
+		console.log(req.file.originalname);
 		var data={
 			username : req.body.username,
 			mail : req.body.mail,
-			password : req.body.password
-
+			password : req.body.password,
+			rollno:req.body.Rollno,
+			img:req.file.originalname
 		}
 		form.insert(data, function(err,docs){
            res.redirect('/form');
@@ -51,6 +124,20 @@ router.post('/remove',function(req,res)
 		res.send(docs);
 	});
 });
+router.post('/update',function(req,res){
+	var data={
+		username : req.body.username,
+			mail : req.body.mail,
+			rollno:req.body.Rollno,
+			password : req.body.password
+		}
+	collection1.update({"_id":req.body.id},{$set:data},function(err,docs){
+		res.redirect('/form');
+
+	});
+});
+
+
 router.post('/signup',function(req,res){
         //Email
 		var transporter = nodemailer.createTransport(
@@ -153,6 +240,23 @@ router.post("/login",function(req,res)
 			
 		});
 });
-
-
+router.post("/login",function(req,res)
+{
+	 var uname =req.body.username;
+	  var password=req.body.password;
+	  var logintime=moment().format("hh:mm:ss a");
+	  console.log(logintime);
+	  collection.update({"name":uname},{$set:{"logintime":logintime}})
+	collection.findOne({"uname":req.body.username,"mail":req.body.mail,"password":req.body.password},function(err,docs)
+		{
+			if(!docs)
+			{
+				res.render('index')
+			}
+			else{
+				delete docs.password
+				req.session.user=docs;
+			}
+			});
+});
 module.exports = router;

@@ -16,10 +16,12 @@ html
           a(data-toggle='pill', href='#form') form
         li
           a(data-toggle='pill', href='#list') list
+        li
+         a( href='/logout') logOut
     .container
       .tab-content
         #form.tab-pane.fade.in.active
-          form(action='/form', method='post')
+          form(action='/form', method='post',enctype="multipart/form-data")
             h3 candidate sign In
             input(type='text', placeholder='username', name='username')
             br
@@ -27,16 +29,23 @@ html
             input(type='email', placeholder='mail', name='mail')
             br
             br
+            input(type='input', placeholder='rollno', name='Rollno')
+            br
+            br
             input(type='password', placeholder='password', name='password')
             br
             br
+            input(type='file',name='image',required='')
+            br
+            br 
             input(type='submit', value='form')
         #list.tab-pane.fade
           br
           br
-          table#example(style='width :100%')
+          table#example(style='width:100%')
             thead
               tr
+                th Profile
                 th Name
                 th Email
                 th Rollno
@@ -45,6 +54,8 @@ html
             tbody
               each member in data
                 tr
+                  td 
+                    img(src="images/"+member.img,height="50",width="50")
                   td #{member.username}
                   td #{member.mail}
                   td #{member.rollno}
@@ -52,14 +63,33 @@ html
                   td
                     button(value=member.rollno).btn.btn-info.edit Edit 
                     button(value=member.rollno).btn.btn-danger.remove Remove
-              script(src="javascripts/table.js")
-              script(src="javascripts/edit.js")
-              script(src="https://code.jquery.com/jquery-3.3.1.js")
-              script(src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js")
-              script(src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js")
-              script(src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js")
-              script(src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js")
-              script(src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js")
-              script(src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js")
-              script(src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js")
-              script(src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js")
+                    .dontshow
+            form(action='/update', method='post')
+              h3 candidate sign In
+            input(type='text', placeholder='username', name='username')
+            br
+            br
+            input(type='email', placeholder='mail', name='mail')
+            br
+            br
+            input(type='input', placeholder='rollno', name='Rollno')
+            br
+            br
+            input(type='password', placeholder='password', name='password')
+            br
+            br
+            input(type='file',name='image',required='')
+            br
+            br 
+            input(type='submit', value='form')
+    script(src="javascripts/table.js")
+    script(src="javascripts/edit.js")
+    script(src="https://code.jquery.com/jquery-3.3.1.js")
+    script(src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js")
+    script(src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js")
+    script(src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js")
+    script(src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js")
+    script(src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js")

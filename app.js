@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var session=require('client-sessions')
 var app = express();
 
 // view engine setup
@@ -18,7 +18,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({
+  cookieName: 'Session', // cookie name dictates the key name added to the request object
+  secret: 'blargadeeblargblarg', // should be a large unguessable string
+  duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
+  activeDuration: 1000 * 60 * 5 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
+  // ephemeral: true, // when true, cookie expires when the browser closes
+  // httpOnly: true, // when true, cookie is not accessible from javascript
+  // secure: true // 
+}));
+ 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
